@@ -1,0 +1,80 @@
+server:
+  port: 9090
+
+spring:
+  application:
+    name: API-GATEWAY
+  config:
+    import: configserver:http://${CONFIG_SERVER_URL:localhost}:9296
+  cloud:
+    gateway:
+      default-filters:
+        - TokenRelay
+      routes:
+        - id: ORDER-SERVICE
+          uri: lb://ORDER-SERVICE
+#          uri: http://order-service-svc
+          predicates:
+            - Path=/order/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: ORDER-SERVICE
+                fallbackUri: forward:/orderServiceFallback
+        - id: PAYMENT-SERVICE
+          uri: lb://PAYMENT-SERVICE
+#          uri: http://payment-service-svc
+          predicates:
+            - Path=/payment/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: PAYMENT-SERVICE
+                fallbackUri: forward:/paymentServiceFallback
+        - id: PRODUCT-SERVICE
+          uri: lb://PRODUCT-SERVICE
+#          uri: http://product-service-svc
+          predicates:
+            - Path=/product/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: PRODUCT-SERVICE
+                fallbackUri: forward:/productServiceFallback
+
+  security:
+    oauth2:
+      client:
+        registration:
+          auth0:
+            clientId: MC0T6TG2nQM1Dhe9N4TCmPVrnvcskFn8
+            clientSecret: Ln9yqpeUph7FqAj3nEbcSUjKQ3dKMSu85mKOmO2YVugF7-IMlq1zOEo1M6i4VggH
+            scope: openid, email, profile, offline_access
+            authorizationGrantType: authorization_code
+            redirectUri: "{baseUrl}/login/oauth2/code/auth0"
+        provider:
+          auth0:
+            issuerUri: https://dev-nnxp3ymqgxzv0l4s.us.auth0.com/
+            jwkSetUri: https://dev-nnxp3ymqgxzv0l4s.us.auth0.com/.well-known/jwks.json
+      resourceserver:
+        jwt:
+          issuer-uri: https://dev-nnxp3ymqgxzv0l4s.us.auth0.com/
+
+auth0:
+  audience: https://dev-nnxp3ymqgxzv0l4s.us.auth0.com/api/v2/
+
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        slidingWindowSize: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 5s
+    instances:
+      orderServiceCB:
+        baseConfig: default
+      paymentServiceCB:
+        baseConfig: default
+      productServiceCB:
+        baseConfig: default
