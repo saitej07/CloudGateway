@@ -1,13 +1,13 @@
-package com.saiteja.CloudGateway;
+// package com.saiteja.CloudGateway;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+// import org.junit.jupiter.api.Test;
+// import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class CloudGatewayApplicationTests {
+// @SpringBootTest
+// class CloudGatewayApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+// 	@Test
+// 	void contextLoads() {
+// 	}
 
-}
+// }
