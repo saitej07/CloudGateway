@@ -1,10 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keycloak
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: keycloak
+  template:
+    metadata:
+      labels:
+        app: keycloak
+    spec:
+      containers:
+        - name: keycloak
+          image: jboss/keycloak:13.0.1
+          ports:
+            - containerPort: 8080   # Keycloak default
+          env:
+            - name: KEYCLOAK_USER
+              value: "admin"
+            - name: KEYCLOAK_PASSWORD
+              value: "admin"
+---
 apiVersion: v1
 kind: Service
 metadata:
   name: keycloak
 spec:
-  ports:
-    - port: 8180
-      targetPort: 8180
   selector:
     app: keycloak
+  ports:
+    - name: http
+      port: 8180       # Cluster-wide port for Keycloak
+      targetPort: 8080 # Maps to containerPort
