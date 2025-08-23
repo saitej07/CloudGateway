@@ -8,8 +8,8 @@ spring:
     import: configserver:http://${CONFIG_SERVER_URL:localhost}:9296
   cloud:
     gateway:
-#      default-filters:
-#        - TokenRelay
+      default-filters:
+        - TokenRelay
       routes:
         - id: ORDER-SERVICE
           uri: lb://ORDER-SERVICE
@@ -42,11 +42,23 @@ spring:
                 name: PRODUCT-SERVICE
                 fallbackUri: forward:/productServiceFallback
 
-#  security:
-#    oauth2:
-#      resourceserver:
-#        jwt:
-#          issuer-uri: http://localhost:8180/auth/realms/dev-realm
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: oauth-dev
+            client-secret: d954aa64-28c6-445a-8857-0f7217e6effc
+            scope: offline_access,profile,email
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8180/auth/realms/dev-realm
+
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8180/auth/realms/dev-realm
 
 #  security:
 #    oauth2:
