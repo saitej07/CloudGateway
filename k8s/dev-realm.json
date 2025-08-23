@@ -1,0 +1,27 @@
+{
+  "realm": "dev-realm",
+  "enabled": true,
+  "clients": [
+    {
+      "clientId": "cloud-gateway",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "secret": "cloudgateway-secret",
+      "redirectUris": ["*"]
+    }
+  ],
+  "users": [
+    {
+      "username": "admin",
+      "enabled": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "admin"
+        }
+      ],
+      "realmRoles": ["admin"]
+    }
+  ]
+}
