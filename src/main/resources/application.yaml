@@ -8,8 +8,8 @@ spring:
     import: configserver:http://${CONFIG_SERVER_URL:localhost}:9296
   cloud:
     gateway:
-      default-filters:
-        - TokenRelay
+#      default-filters:
+#        - TokenRelay
       routes:
         - id: ORDER-SERVICE
           uri: lb://ORDER-SERVICE
@@ -42,26 +42,32 @@ spring:
                 name: PRODUCT-SERVICE
                 fallbackUri: forward:/productServiceFallback
 
-  security:
-    oauth2:
-      client:
-        registration:
-          auth0:
-            clientId: MC0T6TG2nQM1Dhe9N4TCmPVrnvcskFn8
-            clientSecret: Ln9yqpeUph7FqAj3nEbcSUjKQ3dKMSu85mKOmO2YVugF7-IMlq1zOEo1M6i4VggH
-            scope: openid, email, profile, offline_access
-            authorizationGrantType: authorization_code
-            redirectUri: "{baseUrl}/login/oauth2/code/auth0"
-        provider:
-          auth0:
-            issuerUri: https://dev-nnxp3ymqgxzv0l4s.us.auth0.com/
-            jwkSetUri: https://dev-nnxp3ymqgxzv0l4s.us.auth0.com/.well-known/jwks.json
-      resourceserver:
-        jwt:
-          issuer-uri: https://dev-nnxp3ymqgxzv0l4s.us.auth0.com/
+#  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          issuer-uri: http://localhost:8180/auth/realms/dev-realm
 
-auth0:
-  audience: https://dev-nnxp3ymqgxzv0l4s.us.auth0.com/api/v2/
+#  security:
+#    oauth2:
+#      client:
+#        registration:
+#          auth0:
+#            clientId: MC0T6TG2nQM1Dhe9N4TCmPVrnvcskFn8
+#            clientSecret: Ln9yqpeUph7FqAj3nEbcSUjKQ3dKMSu85mKOmO2YVugF7-IMlq1zOEo1M6i4VggH
+#            scope: openid, email, profile, offline_access
+#            authorizationGrantType: authorization_code
+#            redirectUri: "{baseUrl}/login/oauth2/code/auth0"
+#        provider:
+#          auth0:
+#            issuerUri: https://dev-nnxp3ymqgxzv0l4s.us.auth0.com/
+#            jwkSetUri: https://dev-nnxp3ymqgxzv0l4s.us.auth0.com/.well-known/jwks.json
+#      resourceserver:
+#        jwt:
+#          issuer-uri: https://dev-nnxp3ymqgxzv0l4s.us.auth0.com/
+#
+#auth0:
+#  audience: https://dev-nnxp3ymqgxzv0l4s.us.auth0.com/api/v2/
 
 
 resilience4j:
