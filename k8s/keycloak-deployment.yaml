@@ -37,6 +37,6 @@ spec:
     app: keycloak
   ports:
     - protocol: TCP
-      port: 8180       # Service port (what your gateway will use)
+      port: 8080       # Service port (what your gateway will use)
       targetPort: 8080 # Container port inside Keycloak
-  type: ClusterIP
+  type: NodePort
