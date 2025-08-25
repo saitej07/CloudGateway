@@ -72,11 +72,11 @@ spring:
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
         provider:
           keycloak:
-            issuer-uri: http://localhost:8181/realms/dev-realm
+            issuer-uri: http://192.168.49.2:30080/realms/dev-realm
 
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8181/realms/dev-realm
+          issuer-uri: http://192.168.49.2:30080/realms/dev-realm
 
 #  security:
 #    oauth2:
