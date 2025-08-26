@@ -82,7 +82,7 @@ spec:
       containers:
         - name: keycloak
           image: quay.io/keycloak/keycloak:22.0
-          args: ["start-dev"]   # runs in dev mode
+          args: ["start-dev"]
           env:
             - name: KEYCLOAK_ADMIN
               value: saiteja
@@ -98,5 +98,10 @@ spec:
               value: keycloak
             - name: KC_DB_PASSWORD
               value: keycloak
+
+            # ✅ Important: issuer must match what Spring apps use
+            - name: KC_HOSTNAME
+              value: http://keycloak:8080
+
           ports:
             - containerPort: 8080
