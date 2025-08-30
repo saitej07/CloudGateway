@@ -54,13 +54,29 @@ spring:
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
         provider:
           keycloak:
-            issuer-uri: http://keycloak:8080/realms/dev-realm
-            # issuer-uri: http://localhost:8180/auth/realms/dev-realm
+#            issuer-uri: http://keycloak:8080/realms/dev-realm
+             issuer-uri: http://localhost:8180/auth/realms/dev-realm
 
       resourceserver:
         jwt:
-          issuer-uri: http://keycloak:8080/realms/dev-realm
-        #  issuer-uri: http://localhost:8180/auth/realms/dev-realm
+#          issuer-uri: http://keycloak:8080/realms/dev-realm
+          issuer-uri: http://localhost:8180/auth/realms/dev-realm
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0 # trace 100% of requests (important for testing)
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans # send spans to Zipkin
+
+logging:
+  level:
+    io.micrometer.tracing: DEBUG
+    io.zipkin.reporter2: DEBUG
+
+  pattern:
+    level: "%5p [${spring.application.name:},traceId=%X{traceId:-},spanId=%X{spanId:-}]"
   # security:
   #   oauth2:
   #     client:
