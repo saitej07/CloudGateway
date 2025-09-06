@@ -48,19 +48,19 @@ spring:
         registration:
           keycloak:
             client-id: oauth-dev
-            client-secret: d954aa64-28c6-445a-8857-0f7217e6effc
+            client-secret: 24c808c6-6656-453e-ae74-9fdb5194b346
             scope: offline_access,profile,email
             authorization-grant-type: authorization_code
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
         provider:
           keycloak:
-#            issuer-uri: http://keycloak:8080/realms/dev-realm
-             issuer-uri: http://localhost:8180/auth/realms/dev-realm
+            issuer-uri: http://keycloak:8080/realms/dev-realm
+#             issuer-uri: http://localhost:8180/auth/realms/dev-realm
 
       resourceserver:
         jwt:
-#          issuer-uri: http://keycloak:8080/realms/dev-realm
-          issuer-uri: http://localhost:8180/auth/realms/dev-realm
+          issuer-uri: http://keycloak:8080/realms/dev-realm
+#          issuer-uri: http://localhost:8180/auth/realms/dev-realm
 
 management:
   tracing:
